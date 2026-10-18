@@ -11,7 +11,7 @@
 extern struct static_key_false susfs_is_fake_cmdline_or_bootconfig_buffer_set;
 extern void susfs_spoof_cmdline_or_bootconfig(struct seq_file *m);
 #endif
-####################################################################################
+/* SUSFS adaptation boundary */
 
 #if defined(CONFIG_INITRAMFS_IGNORE_SKIP_FLAG) || \
     defined(CONFIG_PROC_CMDLINE_APPEND_ANDROID_FORCE_NORMAL_BOOT)
@@ -63,7 +63,7 @@ static int cmdline_proc_show(struct seq_file *m, void *v)
 		return 0;
 	}
 #endif
-##################################################################################
+/* SUSFS adaptation boundary */
 
 	seq_printf(m, "%s\n", proc_command_line);
 	return 0;
