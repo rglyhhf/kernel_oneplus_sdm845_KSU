@@ -6,3 +6,5 @@ This is my attempt to add a little crDroid customization flavor back into the sd
 - Merged official LineageOS lineage-22.2 branch as of July 2025.
 - Merged official LineageOS lineage-20 branch of common android_kernel_qcom_sdm845 kernel as of July 2025.
 - Other goodies gathered from over the years including work from Anierin Bliss, mcdachpappe, EmanuelCN, snnbyyds, arter97, kerneltoast, 0xCAFEBABE, etc (among others I'm sure).
+
+###### Kernel Source: [crDroid Github](https://github.com/crdroidandroid/android_kernel_oneplus_sdm845/tree/15.0)
