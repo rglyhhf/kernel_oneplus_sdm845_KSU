@@ -4,7 +4,7 @@
 #include <linux/seq_file.h>
 #include <asm/setup.h>
 
-##################################################################Adapted for SUSFS###
+/* Adapted for SUSFS */
 #ifdef CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG
 #include <linux/jump_label.h>
 
@@ -56,7 +56,7 @@ static void proc_command_line_init(void) {
 static int cmdline_proc_show(struct seq_file *m, void *v)
 {
 
-################################################################Adapted for SUSFS####
+/* Adapted for SUSFS */
 #ifdef CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG
 	if (static_branch_likely(&susfs_is_fake_cmdline_or_bootconfig_buffer_set)) {
 		susfs_spoof_cmdline_or_bootconfig(m);
