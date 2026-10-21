@@ -30,26 +30,26 @@ extern void susfs_spoof_cmdline_or_bootconfig(struct seq_file *m);
 static char proc_command_line[COMMAND_LINE_SIZE];
 
 static void proc_command_line_init(void) {
-	char *offset_addr;
-	char *proc_command_line_tail;
+    char *offset_addr;
+    char *proc_command_line_tail;
 
-	strcpy(proc_command_line, saved_command_line);
+    strcpy(proc_command_line, saved_command_line);
 
 #ifdef CONFIG_INITRAMFS_IGNORE_SKIP_FLAG
-	offset_addr = strstr(proc_command_line, INITRAMFS_STR_FIND);
-	if (offset_addr)
-		memcpy(offset_addr, INITRAMFS_STR_REPLACE, INITRAMFS_STR_LEN);
+    offset_addr = strstr(proc_command_line, INITRAMFS_STR_FIND);
+    if (offset_addr)
+        memcpy(offset_addr, INITRAMFS_STR_REPLACE, INITRAMFS_STR_LEN);
 #endif
 
 
 #ifdef CONFIG_PROC_CMDLINE_APPEND_ANDROID_FORCE_NORMAL_BOOT
-	if (strstr(saved_command_line, INITRAMFS_STR_FIND)) {
-		// point proc_command_line_tail to the null terminator of the cmdline
-		proc_command_line_tail = proc_command_line + strlen(proc_command_line);
-		memcpy(proc_command_line_tail, " ", 1);
-		memcpy(proc_command_line_tail + 1, ANDROID_FORCE_NORMAL_BOOT_STR,
+    if (strstr(saved_command_line, INITRAMFS_STR_FIND)) {
+        // point proc_command_line_tail to the null terminator of the cmdline
+        proc_command_line_tail = proc_command_line + strlen(proc_command_line);
+        memcpy(proc_command_line_tail, " ", 1);
+        memcpy(proc_command_line_tail + 1, ANDROID_FORCE_NORMAL_BOOT_STR,
                         sizeof(ANDROID_FORCE_NORMAL_BOOT_STR));
-	}
+    }
 #endif
 }
 
@@ -58,34 +58,34 @@ static int cmdline_proc_show(struct seq_file *m, void *v)
 
 /* Adapted for SUSFS */
 #ifdef CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG
-	if (static_branch_likely(&susfs_is_fake_cmdline_or_bootconfig_buffer_set)) {
-		susfs_spoof_cmdline_or_bootconfig(m);
-		return 0;
-	}
+    if (static_branch_likely(&susfs_is_fake_cmdline_or_bootconfig_buffer_set)) {
+        susfs_spoof_cmdline_or_bootconfig(m);
+        return 0;
+    }
 #endif
 /* SUSFS adaptation boundary */
 
-	seq_printf(m, "%s\n", proc_command_line);
-	return 0;
+    seq_printf(m, "%s\n", proc_command_line);
+    return 0;
 }
 
 static int cmdline_proc_open(struct inode *inode, struct file *file)
 {
-	return single_open(file, cmdline_proc_show, NULL);
+    return single_open(file, cmdline_proc_show, NULL);
 }
 
 static const struct file_operations cmdline_proc_fops = {
-	.open		= cmdline_proc_open,
-	.read		= seq_read,
-	.llseek		= seq_lseek,
-	.release	= single_release,
+    .open		= cmdline_proc_open,
+    .read		= seq_read,
+    .llseek		= seq_lseek,
+    .release	= single_release,
 };
 
 static int __init proc_cmdline_init(void)
 {
-	proc_command_line_init();
+    proc_command_line_init();
 
-	proc_create("cmdline", 0, NULL, &cmdline_proc_fops);
-	return 0;
+    proc_create("cmdline", 0, NULL, &cmdline_proc_fops);
+    return 0;
 }
 fs_initcall(proc_cmdline_init);

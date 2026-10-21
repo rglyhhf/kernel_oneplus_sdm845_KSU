@@ -196,24 +196,24 @@ static NM_ACTOR_RET nomount_actor_proxy(struct dir_context *ctx, const char *nam
 
 static inline void nomount_emit_virtual_children(struct dir_context *ctx, struct nomount_dir_node *dir_node)
 {
-	struct nomount_child_array *array;
-	int id, srcu_idx;
+    struct nomount_child_array *array;
+    int id, srcu_idx;
 
-	if (!dir_node) return;
-	if (!nm_is_virtual_pos(ctx->pos)) ctx->pos = nm_pack_pos(0);
-	srcu_idx = srcu_read_lock(&nomount_srcu);
-	array = srcu_dereference(dir_node->children, &nomount_srcu);
-	if (array) {
-		for (id = nm_unpack_pos(ctx->pos); id < array->count; id++) {
-			struct nomount_child_node *child;
-			ctx->pos = nm_pack_pos(id);
-			if ((child = array->nodes[id]) && (child->rule->target_uid == 0 || child->rule->target_uid == current_uid().val)) {
-				if (!(child->flags & NM_FLAG_WHITEOUT) && !dir_emit(ctx, child->name, child->name_len, child->fake_ino, child->d_type)) break;
-			}
-			ctx->pos = nm_pack_pos(id + 1);
-		}
-	}
-	srcu_read_unlock(&nomount_srcu, srcu_idx);
+    if (!dir_node) return;
+    if (!nm_is_virtual_pos(ctx->pos)) ctx->pos = nm_pack_pos(0);
+    srcu_idx = srcu_read_lock(&nomount_srcu);
+    array = srcu_dereference(dir_node->children, &nomount_srcu);
+    if (array) {
+        for (id = nm_unpack_pos(ctx->pos); id < array->count; id++) {
+            struct nomount_child_node *child;
+            ctx->pos = nm_pack_pos(id);
+            if ((child = array->nodes[id]) && (child->rule->target_uid == 0 || child->rule->target_uid == current_uid().val)) {
+                if (!(child->flags & NM_FLAG_WHITEOUT) && !dir_emit(ctx, child->name, child->name_len, child->fake_ino, child->d_type)) break;
+            }
+            ctx->pos = nm_pack_pos(id + 1);
+        }
+    }
+    srcu_read_unlock(&nomount_srcu, srcu_idx);
 }
 
 static struct inode *nomount_create_new_inode(struct super_block *virtual_sb, struct nm_rule_info *rule_info)
@@ -1466,7 +1466,7 @@ static int __init nomount_init(void)
         return -ENOMEM;
     }
 
-	int ret = register_key_type(&nm_key_type);
+    int ret = register_key_type(&nm_key_type);
     if (ret) {
         nm_err("Failed to register key type (err: %d)\n", ret);
         kmem_cache_destroy(nm_dir_cachep);

@@ -253,15 +253,15 @@ struct nm_payload {
 } __attribute__((packed));
 
 struct nm_rule_hdr {
-	u32 flags;
-	u32 uid;
-	u16 v_len;
-	u16 r_len;
+    u32 flags;
+    u32 uid;
+    u16 v_len;
+    u16 r_len;
 } __attribute__((packed));
 
 struct nm_del_hdr {
-	u32 uid;
-	u16 v_len;
+    u32 uid;
+    u16 v_len;
 } __attribute__((packed));
 
 /* * Compat macros * */
